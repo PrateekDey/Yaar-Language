@@ -1,0 +1,7 @@
+{
+    "iss": "variable",
+    "dikhao": "print",
+    "agar": "if",
+    "warna": "else",
+    "warna_agar": "elif"
+}

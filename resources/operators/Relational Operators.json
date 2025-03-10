@@ -1,0 +1,8 @@
+{
+    "barabar": "==",
+    "jyada": ">",
+    "kam": "<",
+    "jyada toh nhi": ">=",
+    "kam toh nhi": "<=",
+    "barabar toh nhi": "!="
+}
