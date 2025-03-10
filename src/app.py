@@ -1,4 +1,4 @@
-from . import keywords
+from . import lexer
 
 input = '''
     iss a mai 10;
@@ -7,6 +7,6 @@ input = '''
     dikhao c;
     '''
 
-# tokens = lexer.tokenizer(input)
+tokens = lexer.mindMap(input)
 
-print(keywords)
+print(tokens)
