@@ -1,23 +1,13 @@
-import os
-import json
+from . import lexer
 
-def getPath(path):
-    return os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', path)
-
-def getKeyword():
-    with open(getPath('keywords.json'), 'r') as f:
-        return json.load(f)
-
-def getOperator():
-    operator_dir = getPath('operators')
-    operator_dict = {}
-    for filename in os.listdir(operator_dir):
-        if filename.endswith('.json'):
-            key = filename.replace('operator', '').replace('.json', '')
-            with open(os.path.join(operator_dir, filename), 'r') as f:
-                operator_dict[key.lower] = dict(json.load(f))
-    return operator_dict
-
-
-keywords = getKeyword()
-operators = getOperator()
+def yaar_started(filename):
+    try:
+        with open(filename, 'r') as file:
+            input_string = file.read()
+        token_lexer = lexer.Tokenizer()
+        parser_lexer = lexer.Parser()
+        tokens = token_lexer.getTokens(input_string)
+        parsed_tokens = parser_lexer.getParsedTokens(tokens)
+        print(parsed_tokens)
+    except FileNotFoundError:
+        print(f"File {filename} not found.")

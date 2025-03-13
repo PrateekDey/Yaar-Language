@@ -1,23 +1,51 @@
+import os
 import re
-from . import keywords, operators
+import json
 
-def tokenizer(input):
-    lines = input.split('\n')
-    tokens = [cleaned_line.split() for cleaned_line in [line.strip().replace(';','') for line in lines] if cleaned_line != '']
-    return tokens
+class Tokenizer:
+    def getCleanedInput(self, input) -> str:
+        return re.sub(r'[^\w\s_]', ' ', input)
 
-def mindMap(input):
-    tokens = tokenizer(input)
-    keyword_set = set(keywords.keys())
-    operator_set = {op for sub_dict in operators.values() for op in sub_dict.keys()}
+    def getLines(self, input) -> list:
+        return input.split('\n')
+
+    def getWords(self, line) -> list:
+        return line.strip().split(' ')
+
+    def getTokens(self, input) -> list:
+        return [self.getWords(line) for line in self.getLines(self.getCleanedInput(input)) if line]
+
+
+class Parser:
+    def __init__(self):
+        self.keywords = self.getKeywords()
+        self.operators = self.getOperators()
+
+    def getPath(self, path) -> str:
+        return os.path.join(os.path.dirname(os.path.dirname(__file__)), 'resources', path)
     
-    for line in tokens:
-        for token in line:
-            if token.isdigit():
-                print(token, " is a number")
-            elif token in keyword_set:
-                print(token, " is a keyword")
-            elif token in operator_set:
-                print(token, " is an operator")
-            else:
-                print(token, " is a Variable")
+    def getKeywords(self):
+        with open(self.getPath('keywords.json'), 'r') as f:
+            return json.load(f)
+        
+    def getOperators(self):
+        with open(self.getPath('operators.json'), 'r') as f:
+            return json.load(f)
+
+    def getParsedTokens(self, tokens: list[list[str]]) -> list[dict]:
+        keys_keywords = self.keywords.keys()
+        keys_operators = self.operators.keys()
+        ast = list()
+
+        for line in tokens:
+            for element in line:
+                if element.isdigit():
+                    ast.append({'type': 'number', 'value': element})
+                elif element in keys_keywords:
+                    ast.append({'type': 'keyword', 'token': element, 'value': self.keywords[element]})
+                elif element in keys_operators:
+                    ast.append({'type': 'operator', 'token': element, 'value': self.operators[element]})
+                else:
+                    ast.append({'type': 'identifier', 'token': element})
+
+        return ast

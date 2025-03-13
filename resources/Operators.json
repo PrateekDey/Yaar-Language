@@ -1,0 +1,25 @@
+{
+    "plus": "+",
+    "minus": "-",
+    "multiply": "*",
+    "divide": "/",
+    "modulus": "%",
+
+    "mai": "=",
+    "purane_mai_jod": "+=",
+    "purane_mai_kat": "-=",
+
+    "aur": "&&",
+    "ya_toh": "||",
+    "ulta": "!",
+
+    "barabar": "==",
+    "jyada": ">",
+    "kam": "<",
+    "jyada toh nhi": ">=",
+    "kam toh nhi": "<=",
+    "barabar toh nhi": "!=",
+
+    "ek_se_badhao": "++",
+    "ek_se_ghatao": "--"
+}

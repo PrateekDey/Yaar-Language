@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Check if a filename is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <filename.yaar>"
+    exit 1
+fi
+
+# Pass the filename to the Python script
+python3 -c "from src import yaar_started; yaar_started('$1')"
